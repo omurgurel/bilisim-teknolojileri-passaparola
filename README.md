@@ -9,6 +9,8 @@ Bu proje, Bilişim Teknolojileri ve Yazılım dersi kazanımlarına uygun 28 sor
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Web Audio API](https://img.shields.io/badge/Web%20Audio%20API-Offline-success?style=for-the-badge)
 
+### 🌐 [Oyunu Tarayıcıda Canlı Oyna (GitHub Pages)](https://omurgurel.github.io/bilisim-teknolojileri-passaparola/)
+
 ---
 
 ## ✨ Özellikler
