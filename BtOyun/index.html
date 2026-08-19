@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bilişim Teknolojileri Passaparola Oyunu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Üst Başlık & Kontrol Paneli -->
+  <header class="header-bar">
+    <div class="brand">
+      <div class="logo-badge">BT</div>
+      <div class="brand-title">Passaparola • Bilişim Teknolojileri</div>
+    </div>
+
+    <!-- İstatistik Rozetleri -->
+    <div class="stats-container">
+      <div class="stat-pill correct" title="Doğru Sayısı">
+        <span>✓</span>
+        <span id="stat-correct">0</span>
+      </div>
+      <div class="stat-pill wrong" title="Yanlış Sayısı">
+        <span>✗</span>
+        <span id="stat-wrong">0</span>
+      </div>
+      <div class="stat-pill pass" title="Pas Sayısı">
+        <span>⏭</span>
+        <span id="stat-pass">0</span>
+      </div>
+
+      <!-- Zaman Sayacı -->
+      <div class="timer-box" id="timer-box" title="Kalan Süre">
+        <span>⏱</span>
+        <span id="timer-display">04:00</span>
+      </div>
+    </div>
+
+    <!-- Hızlı Kontroller -->
+    <div class="controls">
+      <button class="btn-icon" id="btn-sound-toggle" title="Sesi Aç/Kapat">🔊</button>
+      <button class="btn-icon" id="btn-keyboard-toggle" title="Sanal Klavyeyi Aç/Kapat">⌨️</button>
+      <button class="btn-icon" id="btn-fullscreen" title="Tam Ekran">⛶</button>
+      <button class="btn-icon" id="btn-settings" title="Ayarlar">⚙️</button>
+    </div>
+  </header>
+
+  <!-- Ana Oyun Arenası -->
+  <main class="game-container">
+    <div class="arena" id="arena">
+      <!-- Dairesel Çark Çizgisi -->
+      <div class="wheel-track"></div>
+
+      <!-- 28 Harf Düğmesi JavaScript tarafından buraya dinamik eklenir -->
+
+      <!-- Merkez Soru Kartı -->
+      <div class="center-card" id="center-card">
+        <div class="active-letter-badge" id="active-letter-badge">A</div>
+        <div class="round-info" id="round-info">1. Tur - Harf: A</div>
+        <div class="question-text" id="question-text">Oyun yükleniyor...</div>
+
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="answer-input" 
+            class="answer-input" 
+            placeholder="Cevabınızı yazın..." 
+            autocomplete="off" 
+            autocorrect="off" 
+            autocapitalize="off" 
+            spellcheck="false"
+          >
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-action btn-submit" id="btn-submit">
+            <span>✓</span> Cevapla
+          </button>
+          <button class="btn-action btn-pass" id="btn-pass">
+            <span>⏭</span> PAS
+          </button>
+        </div>
+
+        <div class="hint-feedback" id="hint-feedback"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Dokunmatik Akıllı Tahta Sanal Klavyesi -->
+  <div class="virtual-keyboard-wrapper" id="virtual-keyboard">
+    <div class="keyboard-row">
+      <button class="k-key" data-char="Q">Q</button>
+      <button class="k-key" data-char="W">W</button>
+      <button class="k-key" data-char="E">E</button>
+      <button class="k-key" data-char="R">R</button>
+      <button class="k-key" data-char="T">T</button>
+      <button class="k-key" data-char="Y">Y</button>
+      <button class="k-key" data-char="U">U</button>
+      <button class="k-key" data-char="I">I</button>
+      <button class="k-key" data-char="O">O</button>
+      <button class="k-key" data-char="P">P</button>
+      <button class="k-key" data-char="Ğ">Ğ</button>
+      <button class="k-key" data-char="Ü">Ü</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="k-key" data-char="A">A</button>
+      <button class="k-key" data-char="S">S</button>
+      <button class="k-key" data-char="D">D</button>
+      <button class="k-key" data-char="F">F</button>
+      <button class="k-key" data-char="G">G</button>
+      <button class="k-key" data-char="H">H</button>
+      <button class="k-key" data-char="J">J</button>
+      <button class="k-key" data-char="K">K</button>
+      <button class="k-key" data-char="L">L</button>
+      <button class="k-key" data-char="Ş">Ş</button>
+      <button class="k-key" data-char="İ">İ</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="k-key" data-char="Z">Z</button>
+      <button class="k-key" data-char="X">X</button>
+      <button class="k-key" data-char="C">C</button>
+      <button class="k-key" data-char="V">V</button>
+      <button class="k-key" data-char="B">B</button>
+      <button class="k-key" data-char="N">N</button>
+      <button class="k-key" data-char="M">M</button>
+      <button class="k-key" data-char="Ö">Ö</button>
+      <button class="k-key" data-char="Ç">Ç</button>
+      <button class="k-key backspace" data-action="backspace">⌫</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="k-key action-key" data-action="pass" style="background: #ea580c;">⏭ PAS</button>
+      <button class="k-key space" data-action="space">BOŞLUK</button>
+      <button class="k-key action-key" data-action="clear">TEMİZLE</button>
+      <button class="k-key action-key" data-action="submit" style="background: #059669;">✓ CEVAPLA</button>
+    </div>
+  </div>
+
+  <!-- 1. Başlangıç Modalı -->
+  <div class="modal-overlay open" id="modal-start">
+    <div class="modal-card">
+      <div class="logo-badge" style="display: inline-block; margin-bottom: 14px;">BİLİŞİM TEKNOLOJİLERİ</div>
+      <h1 class="modal-title">PASSAPAROLA</h1>
+      <p class="modal-subtitle">
+        Alfabenin 28 harfi ile bilişim dünyasını keşfedin! Adım adım soruları yanıtlayın, bilemediklerinizi pas geçip 2. turda tamamlayın.
+      </p>
+
+      <div class="settings-grid">
+        <div class="setting-item">
+          <span class="setting-label">⏱ Süre Seçimi:</span>
+          <select class="setting-select" id="setting-timer">
+            <option value="180">3 Dakika (180 sn - Hızlı)</option>
+            <option value="240" selected>4 Dakika (240 sn - Standart)</option>
+            <option value="300">5 Dakika (300 sn - Rahat)</option>
+            <option value="0">Sınırsız Süre (Serbest Mod)</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <span class="setting-label">👥 Oyun Modu:</span>
+          <select class="setting-select" id="setting-team-mode">
+            <option value="single" selected>Bireysel / Sınıf Geneli</option>
+            <option value="team">İki Takım (A vs B Takımı)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-start-game">🚀 OYUNU BAŞLAT</button>
+    </div>
+  </div>
+
+  <!-- 2. Ayarlar Modalı -->
+  <div class="modal-overlay" id="modal-settings">
+    <div class="modal-card">
+      <h2 class="modal-title">⚙️ Oyun Ayarları</h2>
+      <p class="modal-subtitle">Kuralları ve görünümü sınıf ortamına göre ayarlayın.</p>
+
+      <div class="settings-grid">
+        <div class="setting-item">
+          <span class="setting-label">⌨️ Sanal Klavye:</span>
+          <button class="setting-select" onclick="document.getElementById('virtual-keyboard').classList.toggle('show');">Aç / Kapat</button>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">🔊 Sesler:</span>
+          <button class="setting-select" onclick="document.getElementById('btn-sound-toggle').click();">Aç / Kapat</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-close-settings">Kapat</button>
+    </div>
+  </div>
+
+  <!-- 3. Sonuç & Karne Modalı -->
+  <div class="modal-overlay" id="modal-results">
+    <div class="modal-card">
+      <div class="logo-badge" style="display: inline-block; margin-bottom: 12px;">OYUN BİTTİ</div>
+      <h2 class="modal-title" id="results-title">Tebrikler!</h2>
+      
+      <!-- Takım Modu Kazananı (Varsa) -->
+      <div id="team-results-box" style="margin-bottom: 16px; padding: 12px; border-radius: var(--radius-md); background: rgba(0,242,254,0.1); border: 1px solid var(--accent-cyan); display: none;"></div>
+
+      <div class="results-summary">
+        <div class="summary-box correct">
+          <span class="summary-num" id="res-correct">0</span>
+          <span class="summary-label">Doğru</span>
+        </div>
+        <div class="summary-box wrong">
+          <span class="summary-num" id="res-wrong">0</span>
+          <span class="summary-label">Yanlış</span>
+        </div>
+        <div class="summary-box pass">
+          <span class="summary-num" id="res-pass">0</span>
+          <span class="summary-label">Pas / Boş</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-around; margin-bottom: 18px; font-weight: 700;">
+        <div>⏱ Süre: <span id="res-time" style="color: var(--accent-cyan);">0 sn</span></div>
+        <div>🏆 Toplam Puan: <span id="res-score" style="color: var(--accent-yellow);">0 Puan</span></div>
+      </div>
+
+      <h3 style="text-align: left; font-size: 1.05rem; margin-bottom: 8px; color: var(--color-muted);">📋 Soru ve Cevap Karnesi:</h3>
+      <div class="answers-review-list" id="review-list">
+        <!-- JS ile soru soru doldurulur -->
+      </div>
+
+      <button class="btn-primary" id="btn-restart-game">🔄 YENİDEN OYNA</button>
+    </div>
+  </div>
+
+  <!-- Konfeti Efekti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Scriptler -->
+  <script src="questions.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
